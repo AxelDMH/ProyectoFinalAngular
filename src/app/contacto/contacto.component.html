@@ -1,0 +1,108 @@
+<div class="principal">
+    <h1>Contactanos y resuelve todas tus preguntas!!</h1>
+    <p>Cuentas con nosotros para resolver cualquier duda que tengas sobre los autos, incluso el tuyo.</p>
+    <p>Simplemente ingresa tus datos en el formulario de abajo, y envianos un mensaje. Estaremos al pendiente de todas tus preguntas. No solo eso, tambien puedes sugerirnos cosas en las que cambiar.
+    </p>
+    <img class="imagen" src="../../assets/img/Logo Nombre.png" alt="">
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div id="formularioF">
+        <div class="formulario">
+            <div class="mb-3">
+                <label for="senderName">Nombre </label>
+                <input id="senderName" formControlName="senderName" required>
+                <div *ngIf="form.get('senderName')?.invalid && form.get('senderName')?.touched">
+                    El nombre es requerido y debe tener al menos 3  caracteres.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label type="email" for="senderEmail">Correo</label>
+                <input id="senderEmail" formControlName="senderEmail" type="email" required>
+                <div *ngIf="form.get('senderEmail')?.invalid && form.get('senderEmail')?.touched">
+                    Ingrese un correo válido.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="subject">Asunto</label>
+                <input id="subject" formControlName="subject" required>
+                <div *ngIf="form.get('subject')?.invalid && form.get('subject')?.touched">
+                    Asunto es requerido.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="comment">Comentario</label>
+                <textarea id="comment" formControlName="comment"></textarea>
+                <div *ngIf="form.get('comment')?.invalid && form.get('comment')?.touched">
+                    El comentario es requerido y debe tener al menos 10 caracteres.
+                </div>
+            </div>
+            <div class="flex align-items-center">
+                <p-checkbox 
+                  formControlName="satisfecho"
+                  label="Satisfecho" 
+                  value="Satisfecho"></p-checkbox>
+            </div>
+            <div class="flex align-items-center">
+                <p-checkbox 
+                  formControlName="contento"
+                  label="Contento"
+                  value="Contento"></p-checkbox>
+            </div>
+            <div class="flex align-items-center">
+                <p-checkbox 
+                  formControlName="descontento"
+                  label="Descontento" 
+                  value="Descontento"></p-checkbox>
+            </div>
+            <div class="flex align-items-center">
+                <p-checkbox 
+                  formControlName="desagradable"
+                  label="Desagradable" 
+                  value="Desagradable"></p-checkbox>
+            </div>
+            <button type="submit" [disabled]="form.invalid" (click)="onSubmit()">Enviar</button>
+        </div>
+    </div>
+</form>
+
+<div class="titulo">
+    <p>Tu opinion es importante, califica nuestro servicio</p>
+    <p-rating [(ngModel)]="value" [cancel]="false"></p-rating>
+</div>
+
+<div class="titulo">
+    <h2>Conocenos</h2>
+    <p>Esta pagina es simplemente un proyecto escolar, por ende gran parte de la informacion es inventada. Aqui debajo te mostramos nuestro equipo.</p>
+</div>
+
+<div class="nosotros">
+    <div class="persona">
+        <img class="imgPerf" src="../../assets/img/Einar.jpeg" alt="">
+        <h5 class="h5">Einar Naim Aguilar Santana</h5>
+    </div>
+    <div class="persona">
+        <img class="imgPerf" src="../../assets/img/Dany.jpeg" alt="">
+        <h5>Daniel Alejandro Barbosa Ayala</h5>
+    </div>
+    <div class="persona">
+        <img class="imgPerf" src="../../assets/img/Axel.jpeg" alt="">
+        <h5>Axel Daniel Macias Heredia</h5>
+    </div>
+    <div class="persona">
+        <img class="imgPerf" src="../../assets/img/Sebas.jpeg" alt="">
+        <h5>Sebastian  Rodriguez Hernandez</h5>
+    </div>
+    <div class="persona">
+        <img class="imgPerf" src="../../assets/img/Jesus.jpeg" alt="">
+        <h5>Jesus Ruvalcaba Lozano</h5>
+    </div>
+    <div class="persona">
+        <img class="imgPerf" src="../../assets/img/Asly.jpeg" alt="">
+        <h5>Asly Lizbeth Salinas Morales</h5>
+    </div>
+    <div class="persona">
+        <img class="imgPerf" src="../../assets/img/carlos.jpeg" alt="">
+        <h5>Carlos Alberto Contreras Martinez</h5>
+    </div>
+</div>
