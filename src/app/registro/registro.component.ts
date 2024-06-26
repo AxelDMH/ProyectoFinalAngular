@@ -81,7 +81,7 @@ export class RegistroComponent {
           this.datosCliente.fechaInicio = this.startDate;
           this.datosCliente.fechaFin = this.endDate;
 
-          this.http.post('https://proyectofinalnode-35bdba8101d6.herokuapp.com/registro', { email: this.usuario.correo, datosCliente: this.datosCliente })
+          this.http.post('https://proyectofinalnode-993ecf9373e3.herokuapp.com/registro', { email: this.usuario.correo, datosCliente: this.datosCliente })
           .subscribe(
             response => {
               console.log('Respuesta del servidor:', response);
