@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, getAuth, updateProfile, signOut, User } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, getAuth, updateProfile, signOut, User, signInWithPhoneNumber, RecaptchaVerifier } from '@angular/fire/auth';
 import { Firestore, collection, doc, setDoc, query, where, getDocs, getDoc, addDoc, Timestamp, deleteDoc } from '@angular/fire/firestore';
 import { FormGroup } from '@angular/forms';
 import { signInWithEmailAndPassword } from '@firebase/auth';
@@ -103,6 +103,7 @@ export class UsuariosService {
   //         const errorMessage = error.message;
   //       });
   // }
+
   iniciar(correo: string, pass: string): Promise<void> {
     return signInWithEmailAndPassword(this.auth, correo, pass)
       .then((userCredential) => {
@@ -133,6 +134,31 @@ export class UsuariosService {
       return this.clientes;
 
   }
+
+  async loginConTelefono({telefono}: any) {
+    const tel = String(telefono);
+    let correo: string = '';
+    
+    const applicationVerifier = new RecaptchaVerifier(this.auth, 'recaptcha-container', {
+      size: 'invisible',
+      callback: (response: any) => {}
+    });
+    
+    try {
+      const confirmationResult = await signInWithPhoneNumber(this.auth, telefono, applicationVerifier);
+      const verificationCode = prompt('Por favor, ingrese el código de verificación que recibió en su teléfono');
+      
+      if (verificationCode != null) {
+        const result = await confirmationResult.confirm(verificationCode);
+        correo = await this.getCorreo(tel.slice(3));
+        this.citasService.guardarCookie(String(correo));
+        console.log('Sesion Iniciada', result);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
 
   async futurasCitas(){
     const fechaAct = new Date();
@@ -210,6 +236,7 @@ export class UsuariosService {
     });
     return this.clientes;
   }
+
   private convertTimestampToDate(timestamp: Timestamp): Date {
     return timestamp.toDate();
   }
@@ -239,6 +266,39 @@ export class UsuariosService {
           return null;
       }
       return null;
+  }
+
+  async cuentaNombre(): Promise<string> {
+    this.valor = this.citasService.obtenerCookie();
+    if (this.valor != null) {
+        const docRef = doc(this.firestore, "usuarios", this.valor);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            this.usuario.nombre = docSnap.get("nombre");
+            return this.usuario.nombre;
+        }
+        return "";
+    }
+    return "";
+}
+
+
+
+  async getCorreo(tel:string):Promise<string>{
+    const q = query(collection(this.firestore, "usuarios"), where("tel", "==", tel));
+    var correo = '';
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const actual:Usuarios = {
+        correo: doc.get('correo'),
+        nombre: doc.get('nombre'),
+        tel: doc.get('tel'),
+        pass: doc.get('pass'),
+      }
+      correo = actual.correo;
+    });
+
+    return correo;
   }
 
   async eliminarCita(nombre: string, auto: string, fechaFin: Date): Promise<void> {
