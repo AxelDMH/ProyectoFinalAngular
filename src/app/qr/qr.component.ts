@@ -19,7 +19,7 @@ export class QrComponent {
   }
 
   generateQR(currentUrl: string) {
-    this.http.get<{ number: number }>('https://proyectofinalnode-993ecf9373e3.herokuapp.com/random-number')
+    this.http.get<{ number: number }>('https://pruebafinalnode-a2e9e14f2d79.herokuapp.com/random-number')
       .subscribe(
         (response) => {
           const randomIndex = response.number;

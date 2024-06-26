@@ -40,7 +40,7 @@ export class ContactoComponent {
     if (this.form.valid) {
       const formData = this.form.value;
 
-      this.http.post('https://proyectofinalnode-993ecf9373e3.herokuapp.com/send-email', formData)
+      this.http.post('https://pruebafinalnode-a2e9e14f2d79.herokuapp.com/send-email', formData)
         .subscribe(response => {
           console.log('Correo enviado', response);
         }, error => {
