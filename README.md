@@ -1,5 +1,7 @@
 # CarsForCracks
 
+Este proyecto es una pagina ficticia, la cual permite rentar carros por un periodo de tiempo.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
 
 ## Development server
